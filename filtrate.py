@@ -24,12 +24,9 @@ def filtrate_csv(csv_file_path, whitelist, spellchecker):
         if is_spelled_correctly(spellchecker, row['Word']):
             yield row
 
-def process_file(input_file):
-    whitelist_path = 'white-list.csv'
+def process_file(input_file, whitelist_path):
     whitelist = load_whitelist(whitelist_path)
     spellchecker = load_spellchecker()
-
-    base_name = os.path.splitext(os.path.basename(input_file))[0]
 
     # 使用相同的文件路径来覆盖原文件
     result_csv_file_path = input_file
@@ -44,6 +41,7 @@ def process_file(input_file):
             writer.writerow(row)
 
     print(f"过滤完成，结果已保存到 {result_csv_file_path}")
+    return result_csv_file_path
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -51,9 +49,10 @@ if __name__ == "__main__":
         sys.exit(1)
 
     csv_file_path = sys.argv[1]
+    whitelist_path = sys.argv[2]
 
     if not os.path.isfile(csv_file_path):
         print(f"Error: 文件 '{csv_file_path}' 不存在.")
         sys.exit(1)
 
-    process_file(csv_file_path)
+    process_file(csv_file_path, whitelist_path)

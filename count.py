@@ -21,13 +21,7 @@ def count_words_from_file(file_path):
 
     return word_count
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python count.py <file_path>")
-        sys.exit(1)
-
-    file_path = sys.argv[1]
-
+def process_file(file_path):
     result = count_words_from_file(file_path)
 
     # 按频次从高到低排序
@@ -46,3 +40,13 @@ if __name__ == "__main__":
             writer.writerow({'Word': word, 'Frequency': count})
 
     print(f"结果已保存到 {csv_file_name}")
+    return csv_file_name
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python count.py <file_path>")
+        sys.exit(1)
+
+    file_path = sys.argv[1]
+
+    process_file(file_path)
